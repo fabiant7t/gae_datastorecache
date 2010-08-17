@@ -1,6 +1,7 @@
 DatastoreCache
 --------------
-A key value cache persisted by the datastore offering a compatible subset of memcache API methods.
+    A key value cache persisted by the datastore offering a compatible subset
+    of memcache API methods.
 
 Intention:
 ----------
