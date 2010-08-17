@@ -1,0 +1,25 @@
+DatastoreCache
+--------------
+A key value cache persisted by the datastore offering a compatible subset of memcache API methods.
+
+Intention:
+----------
+    I stored the result of some expensive requests using the memcache API,
+    which might (and does) expire sometime. To not compute everything again,
+    I wrote the datastore cache to also persist the results on BigTable.
+
+Usage:
+------
+    gae_datastorecache.models.DatastoreCache exposes the following API methods
+    that are compatible to the google.appengine.api.memcache methods:
+    (See http://tinyurl.com/appengine-memcache-functions for details)
+    * add
+    * delete
+    * get
+    * flush_all (max 1000 items at the moment!)
+    * replace
+    * set
+
+Tests:
+------
+    Have a look at the tests.py, it covers the whole code.
