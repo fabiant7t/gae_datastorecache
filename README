@@ -12,8 +12,9 @@ Intention:
 Usage:
 ------
     gae_datastorecache.models.DatastoreCache exposes the following API methods
-    that are compatible to the google.appengine.api.memcache methods:
+    that are compatible with the google.appengine.api.memcache methods:
     (See http://tinyurl.com/appengine-memcache-functions for details)
+
     * add
     * delete
     * get
