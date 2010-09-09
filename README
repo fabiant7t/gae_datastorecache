@@ -18,7 +18,7 @@ Usage:
     * add
     * delete
     * get
-    * flush_all (max 1000 items at the moment!)
+    * flush_all
     * replace
     * set
 
