@@ -8,6 +8,9 @@ Intention:
     I stored the result of some expensive requests using the memcache API,
     which might (and does) expire sometime. To not compute everything again,
     I wrote the datastore cache to also persist the results on BigTable.
+    Using a decorator I have a two layer cache that is also helpful while
+    App Engine's scheduled maintenance periods where memcache is disabled
+    and returns None and BigTable is in read-only mode.
 
 Usage:
 ------
