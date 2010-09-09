@@ -157,20 +157,11 @@ class DatastoreCachePublicMethodsTests(unittest.TestCase):
         self.assertTrue(Cache.set(self.key, self.value))
         self.assertTrue(Cache.replace(self.key, 'new value'))
 
-    def test_flush_all_with_less_than_1000_items(self):
+    def test_flush_all(self):
         self.assertTrue(Cache.set('1', self.value))
         self.assertTrue(Cache.set('2', self.value))
         self.assertTrue(Cache.flush_all())
-        self.assertFalse(Item.all().fetch(1000))
-
-    def test_flush_all_should_fail_because_of_too_many_items(self):
-        self.assertTrue(Cache.set('1', self.value))
-        self.assertTrue(Cache.set('2', self.value))
-        self.assertFalse(Cache.flush_all(max_items=1))
-
-    def test_flush_all_with_invalid_max_items(self):
-        self.assertRaises(ValueError, Cache.flush_all, {'max_items': 0})
-        self.assertRaises(ValueError, Cache.flush_all, {'max_items': 1001})
+        self.assertFalse(Item.all().count())
 
     def test_flush_all_but_db_delete_fails(self):
         _original_delete = db.delete

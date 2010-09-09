@@ -46,7 +46,7 @@ class DatastoreCache(object):
                 'Unix epoch time')
         if time == 0:
             dt = datetime.datetime(year=datetime.MAXYEAR, month=12, day=31)
-        elif time <= 2678400: # 31 days in seconds
+        elif time <= 2678400:  # 31 days in seconds
             dt = datetime.datetime.now() + datetime.timedelta(seconds=time)
         else:
             dt = datetime.datetime.fromtimestamp(time)
@@ -170,21 +170,18 @@ class DatastoreCache(object):
         return False
 
     @classmethod
-    def flush_all(self, max_items=1000):
+    def flush_all(self):
         """
-        Deletes max 1000 items in cache.
-        The return value is True on success, False on error (or if there are
-        items left).
+        Deletes all items in cache.
+        The return value is True on success, False on error.
         """
-        if max_items < 1 or max_items > 1000:
-            raise ValueError('Parameter max_items must be between 0 and 1000')
-
         try:
-            db.delete(DatastoreCacheItem.all().fetch(max_items))
+            entities = DatastoreCacheItem.all().fetch(100)
+            while entities:
+                db.delete(entities)
+                entities = DatastoreCacheItem.all().filter('__key__ >',
+                    entities[-1].key()).fetch(100)
         except:
             return False
-
-        if DatastoreCacheItem.all().fetch(1):
-            return False
-
-        return True
+        else:
+            return True
